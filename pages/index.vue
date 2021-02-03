@@ -42,7 +42,6 @@ v-card(elevation=18, width="700" shaped )
         x-large,
         icon,
         @click="sendMessege(item.icon)"
-        href="whatsapp://send?text=This is WhatsApp sharing example using link" 
       ) 
         v-icon {{ `fab fa-${item.icon}` }}
       v-spacer(v-if="index < items.length - 1")
@@ -92,6 +91,7 @@ export default {
           link = `https://telegram.me/share/url?url=<URL>&text=<TEXT>`;
           break;
       }
+      window.open(link)
     },
   },
 };
