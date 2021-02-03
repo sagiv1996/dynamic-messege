@@ -1,7 +1,7 @@
 <template lang="pug">
 v-card(elevation=18, width="700" shaped )
   v-card-title.justify-center {{ $t('card.title') }}
-  v-card-text
+  v-card-text 
     v-form(ref="form")
       v-text-field(
         prepend-icon="fas fa-address-book",
@@ -42,6 +42,8 @@ v-card(elevation=18, width="700" shaped )
         x-large,
         icon,
         @click="sendMessege(item.icon)"
+        :href="item.href" 
+        :disabled="!phone" 
       ) 
         v-icon {{ `fab fa-${item.icon}` }}
       v-spacer(v-if="index < items.length - 1")
@@ -50,14 +52,7 @@ v-card(elevation=18, width="700" shaped )
 export default {
   data: () => ({
     phone: null,
-    text: null,
-    items: [
-      { icon: "viber", color: "#665CAC" },
-      { icon: "whatsapp", color: "#4fce5d" },
-      { icon: "skype", color: "#00aff0" },
-      { icon: "telegram", color: "#0088cc" },
-      { icon: "weixin", color: "#7BB32E" },
-    ],
+    text: null    
   }),
   methods: {
     phoneRules(v) {
@@ -75,24 +70,18 @@ export default {
       const supported = "contacts" in navigator && "ContactsManager" in window;
       if (supported) {
       } else alert("dont working");
-    },
-    sendMessege(type) {
-      let link;
-      switch (type) {
-        case "viber":
-          link = `viber://contact?number=%2B${this.phone}`;
-          break;
-        case "whatsapp":
-          link = `https://wa.me/${this.phone}?text=${this.text}`;
-        case "skype":
-          link = `skype:echo${this.phone}?chat`;
-          break;
-        case "telegram":
-          link = `https://telegram.me/share/url?url=<URL>&text=<TEXT>`;
-          break;
-      }
-      window.open(link)
-    },
+    }
   },
+  computed:{
+    items(){
+   return     [
+      { icon: "viber", color: "#665CAC", href: `viber://chat?number=${this.phone}` },
+      { icon: "whatsapp", color: "#4fce5d", href: `https://wa.me/${this.phone}?text=${this.text}` },
+      { icon: "skype", color: "#00aff0", href: `skype:echo${this.phone}?call` },
+      { icon: "telegram", color: "#0088cc" },
+      { icon: "weixin", color: "#7BB32E" },
+    ]
+    }
+  }
 };
 </script>
