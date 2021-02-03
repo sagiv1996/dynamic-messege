@@ -3,8 +3,8 @@
     v-main(class= "info")
       v-container( fill-height class="justify-center" )  
         nuxt 
-    v-btn( @click="openSetting" bottom left absolute icon dark   )
-      v-icon fas fa-cog
+      v-btn( @click="openSetting" bottom left absolute icon dark   )
+        v-icon fas fa-cog
         
           
 
